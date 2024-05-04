@@ -1,25 +1,5 @@
-import { getActivities } from "@/services/getActivities";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useQuery } from "@tanstack/react-query";
-import
+import { Calendar } from "@/components/Cal";
 
-export default function CalendarPage() {
-  const supabase = useSupabaseClient();
-  const activityQuery = useQuery({
-    queryKey: ["activities"],
-    queryFn: () => getActivities(supabase),
-  });
-  return (
-    <div>
-      <h1>Calendar Page</h1>
-      <Cal />
-      {activityQuery.isLoading && <div>Loading...</div>}
-      {activityQuery.data?.map((task) => (
-        <li key={task.id}>
-        {task.familymember.name} - {task.subject} - {task.status.name}
-        </li>
-      ))}
-      {activityQuery.isError && <div>Error fetching data</div>}
-    </div>
-  );
+export default function Home() {
+  return <div><Calendar/></div>;
 }

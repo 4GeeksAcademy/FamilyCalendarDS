@@ -1,3 +1,5 @@
+import { Calendar } from "@/components/Cal";
+
 export default function Home() {
-  return <div>Hello</div>;
+  return <div><Calendar/></div>;
 }
