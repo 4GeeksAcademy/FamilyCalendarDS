@@ -17,17 +17,51 @@ export default function CalendarPage() {
     queryFn: () => getActivities(supabase, d),
     enabled: !!dd && !!mm && !!yyyy,
   });
-  return (
-    <div>
-      <h1>Calendar Page</h1>
 
-      {activityQuery.isLoading && <div>Loading...</div>}
-      {activityQuery.data?.map((task) => (
-        <li key={task.id}>
-          {task.familymember.name} - {task.subject} - {task.status}
-        </li>
-      ))}
-      {activityQuery.isError && <div>Error fetching data</div>}
+  // Separate tasks for Child 1 and Child 2
+  const child1Tasks = activityQuery.data?.filter(
+    (task) => task.familymember.name === "Luke"
+  );
+  const child2Tasks = activityQuery.data?.filter(
+    (task) => task.familymember.name === "Bohan"
+  );
+
+  return (
+    <div
+      className="container"
+      style={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <h1>Task Daily Family Page</h1>
+      <div className="column" style={{ width: "48%", margin: "1%" }}>
+        <div>Luke</div>
+
+        {activityQuery.isLoading && <div>Loading...</div>}
+        {child1Tasks &&
+          child1Tasks.map((task) => (
+            <li key={task.id}>
+              {task.subject} - {task.status}
+            </li>
+          ))}
+        {activityQuery.isError && <div>Error fetching data</div>}
+        <a href="/calendar/create" className="btn btn-success">
+          Add Task
+        </a>
+      </div>
+      <div className="column" style={{ width: "48%", margin: "1%" }}>
+        <div>Bohan</div>
+
+        {activityQuery.isLoading && <div>Loading...</div>}
+        {child2Tasks &&
+          child2Tasks.map((task) => (
+            <li key={task.id}>
+              {task.subject} - {task.status}
+            </li>
+          ))}
+        {activityQuery.isError && <div>Error fetching data</div>}
+        <a href="/calendar/create" className="btn btn-success">
+          Add Task
+        </a>
+      </div>
     </div>
   );
 }
